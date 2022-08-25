@@ -1,11 +1,13 @@
 package com.spring.BankApplicatin.service;
 
 import com.spring.BankApplicatin.dao.UserDao;
+import com.spring.BankApplicatin.entity.Account;
 import com.spring.BankApplicatin.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,4 +27,15 @@ public class UserService {
     public List<User> getUsers(){
         return userDao.findAll();
     }
+
+
+
+    public User findById(long id) {
+        Optional<User> user = userDao
+                .findById(id);
+        // accountDao.save(account);
+        return user.orElse(null);
+       // return null;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.spring.BankApplicatin.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class WithdrawInput extends accountInput{
-             long id;
-             long balance;
-
+public class DepositInput {
+    private long id;
+    //private long targetAccountNo;
+    private long balance;
 }

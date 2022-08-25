@@ -12,5 +12,5 @@ public class accountRequest {
 
         private String accName;
         private long balance;
-
+        private long userID;
 }

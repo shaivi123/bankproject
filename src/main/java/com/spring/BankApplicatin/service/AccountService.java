@@ -3,6 +3,7 @@ package com.spring.BankApplicatin.service;
 import com.spring.BankApplicatin.constants.ACTION;
 import com.spring.BankApplicatin.dao.AccountDao;
 import com.spring.BankApplicatin.entity.Account;
+import com.spring.BankApplicatin.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,14 @@ import java.util.Optional;
 public class AccountService {
 
     private final AccountDao accountDao;
+    private final UserService userService;
 
-    public Account createAccount(String accName, long balance){
+    public Account createAccount(String accName, long balance,long userId){
+        User userExists = userService.findById(userId);
         Account account=new Account();
         account.setAccName(accName);
         account.setBalance(balance);
+        account.setUser(userExists);
         return accountDao.save(account);
     }
     public List<Account> getAccounts(){
@@ -33,7 +37,7 @@ public class AccountService {
     public Account getAccount(long id) {
         Optional<Account> account = accountDao
                 .findById(id);
-
+        // accountDao.save(account);
         return account.orElse(null);
     }
 

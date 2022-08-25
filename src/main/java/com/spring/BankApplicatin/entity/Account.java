@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -16,11 +14,19 @@ import java.util.List;
 @Table(name = "account" )
 public class Account {
 
+
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private long id;
     private String accName;
     private long balance;
-    //private transient List<Account> transactions;
+
+
+    public void setUser(User userExists) {
+
+        //useraccountDao.save(userExists);
+    }
+
 }
