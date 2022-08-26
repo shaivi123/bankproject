@@ -11,6 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class WithdrawInput extends accountInput{
              long id;
-             long balance;
+             long amount;
 
 }

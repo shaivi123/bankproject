@@ -10,7 +10,15 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DepositInput {
-    private long id;
-    private long amount;
+public class TransactionInput {
+
+//    private  final AccountInput sourceAccount;
+
+//    private final AccountInput targetAccount;
+
+    private double amount;
+
+    private String reference;
+
+
 }
