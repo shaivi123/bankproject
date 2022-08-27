@@ -8,7 +8,7 @@ import com.spring.BankApplicatin.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -38,13 +38,13 @@ public class AccountController {
 
     // for withdraw amount
     @PutMapping("/withdraw")
-    public ResponseEntity<?> withDraw(@RequestBody WithdrawInput withdrawInput) {
+    public ResponseEntity<?> withDraw( @Valid @RequestBody WithdrawInput withdrawInput) {
         return accountService.withDraw(withdrawInput);
         }
 
      // for deposit amount
     @PutMapping(value = "/deposit")
-    public ResponseEntity<?> deposit(@RequestBody DepositInput depositInput) {
+    public ResponseEntity<?> deposit( @Valid @RequestBody DepositInput depositInput) {
           return accountService.deposit(depositInput);
     }
 

@@ -15,10 +15,12 @@ public class TransactionInput {
 //    private  final AccountInput sourceAccount;
 
 //    private final AccountInput targetAccount;
+    private long id;
+    private long amount;
 
-    private double amount;
-
-    private String reference;
+//    private String reference;
+    private accountInput sourceAccount;
+    private accountInput targetAccount;
 
 
 }

@@ -12,4 +12,5 @@ public interface AccountDao extends JpaRepository<Account,Long> {
 //    Optional<Account> findByAccountNumber(String accountNumber);
 
    // Object findBySourceAccountIdOrderByInitiationDate(long id);
+   Optional<Account> findById(long sourceAccountId);
 }
