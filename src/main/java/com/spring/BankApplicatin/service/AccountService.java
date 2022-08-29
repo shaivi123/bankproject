@@ -7,6 +7,7 @@ import com.spring.BankApplicatin.dto.DepositInput;
 import com.spring.BankApplicatin.dto.TransactionInput;
 import com.spring.BankApplicatin.dto.WithdrawInput;
 import com.spring.BankApplicatin.entity.Account;
+//import com.spring.BankApplicatin.entity.Accounts;
 import com.spring.BankApplicatin.entity.Transaction;
 import com.spring.BankApplicatin.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +30,12 @@ public class AccountService {
     private final UserService userService;
     //private final Account account;
 
-    public Account createAccount(String accName, long balance, long userId) throws IOException {
+    public Account createAccount(String accName, long balance, long userId) throws Exception {
         User userExists = userService.findById(userId);
         Account account = new Account();
         account.setAccName(accName);
         account.setBalance(balance);
-         //account.set(userExists);
+         account.setUser(userExists);
         return accountDao.save(account);
     }
 
@@ -63,9 +64,9 @@ public class AccountService {
         accountDao.save(account);
     }
 
-    public boolean isAmountAvailable(double amount, double accountBalance) {
-        return (accountBalance - amount) > 0;
-    }
+//    public boolean isAmountAvailable(double amount, double accountBalance) {
+//        return (accountBalance - amount) > 0;
+//    }
 //    public static boolean isAmountValid(String amount) {
 //
 //        return Constants.AMOUNT_PATTERN.matcher(amount).find();

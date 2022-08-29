@@ -30,12 +30,22 @@ public class UserService {
 
 
 
-    public User findById(long id) {
-        Optional<User> user = userDao
-                .findById(id);
-        // accountDao.save(account);
-        return user.orElse(null);
-       // return null;
+//    public User findById(long id) {
+//        Optional<User> user = userDao
+//                .findById(id);
+//        // accountDao.save(account);
+//        return user.orElse(null);
+//       // return null;
+//    }
+ public User findById(long userId) throws Exception
+{
+    Optional<User> byId = userDao.findById(userId);
+    if(byId.isPresent())
+    {
+        return byId.get();
+    }else{
+        throw new RuntimeException("User not found!");
     }
+}
 
 }

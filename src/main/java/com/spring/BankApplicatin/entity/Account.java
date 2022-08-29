@@ -10,6 +10,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import java.util.List;
+
 import static com.spring.BankApplicatin.constants.Constants.*;
 
 
@@ -23,13 +25,26 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    //@Column(name = "account_id", nullable = false)
     private long id;
-    @NotEmpty
-    @Size(min=3,max=10)
+   // @NotEmpty
+   // @Size(min=3,max=10)
+   //@Column(name= "account_name")
     private String accName;
     //@Size(min=3)
+   // @Column(name= "balance")
     private long balance;
+
+    @ManyToOne(targetEntity = Account.class)
+    @JoinColumn(name = "id", nullable = false,insertable=false, updatable = false)
+    private  User user;
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public boolean isAmountAvailable(double amount, double accountBalance) {
         return (accountBalance - amount) > 0;

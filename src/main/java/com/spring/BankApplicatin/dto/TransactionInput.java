@@ -16,6 +16,7 @@ public class TransactionInput {
 
 //    private final AccountInput targetAccount;
     private long id;
+    private String accName;
     private long amount;
 
 //    private String reference;

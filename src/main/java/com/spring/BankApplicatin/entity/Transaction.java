@@ -13,18 +13,14 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "transaction")
+@Table(name = "transactions")
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private long sourceAccountId;
-
-    private long targetAccountId;
-
-    private String targetOwnerName;
+    private String accName;
 
     private long amount;
 }

@@ -20,7 +20,7 @@ public class AccountController {
 
     //for saving account details in userId
     @PostMapping("/saveAccount/{userId}")
-    public Account createAccount(@RequestBody accountRequest dto) throws IOException {
+    public Account createAccount(@RequestBody accountRequest dto, @PathVariable("userId") int userId) throws Exception {
         return accountService.createAccount(dto.getAccName(), dto.getBalance(),dto.getUserID());
     }
 
