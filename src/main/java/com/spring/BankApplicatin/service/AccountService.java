@@ -1,22 +1,29 @@
 package com.spring.BankApplicatin.service;
 
 import com.spring.BankApplicatin.constants.ACTION;
-import com.spring.BankApplicatin.constants.Constants;
 import com.spring.BankApplicatin.dao.AccountDao;
 import com.spring.BankApplicatin.dto.DepositInput;
-import com.spring.BankApplicatin.dto.TransactionInput;
 import com.spring.BankApplicatin.dto.WithdrawInput;
+import com.spring.BankApplicatin.dto.accountRequest;
 import com.spring.BankApplicatin.entity.Account;
-//import com.spring.BankApplicatin.entity.Accounts;
-import com.spring.BankApplicatin.entity.Transaction;
-import com.spring.BankApplicatin.entity.User;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,23 +35,39 @@ public class AccountService {
 
     private final AccountDao accountDao;
     private final UserService userService;
-    //private final Account account;
+    private final EntityManager entityManager;
 
-    public Account createAccount(String accName, long balance, long userId) throws Exception {
-        User userExists = userService.findById(userId);
+    public Account createAccount(String accName, long balance) throws Exception {
         Account account = new Account();
         account.setAccName(accName);
         account.setBalance(balance);
-         account.setUser(userExists);
+
         return accountDao.save(account);
     }
 
-    public List<Account> getAccounts() {
-        return accountDao.findAll();
+  //  get accounts by name using of custom query
+    public List<Account> getAccounts(String accName) {
+        List<Account> account= accountDao.findAll(new Specification<Account>(){
+           @Override
+            public  Predicate toPredicate(Root<Account> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+                Predicate p=cb.conjunction();
+                   p=cb.and(p,cb.like(root.get("accName"),"%" + accName +"%" ));
+                   return p;
+                //This is not using of custom method
+                // p=cb.and(p,root.get("accName"));
+            }
+        });
+        return account;
     }
 
-    public Account checkBalanceById(long accountId) {
-        return accountDao.findById(accountId).get();
+//    public List<Account> getAccounts(String accName) {
+//         Account account= (Account) accountDao.findAll();
+//
+//        }
+//    }
+
+    public Optional<Account> checkAccountById(long id) {
+        return  accountDao.findById(id);
     }
 
 
@@ -64,13 +87,6 @@ public class AccountService {
         accountDao.save(account);
     }
 
-//    public boolean isAmountAvailable(double amount, double accountBalance) {
-//        return (accountBalance - amount) > 0;
-//    }
-//    public static boolean isAmountValid(String amount) {
-//
-//        return Constants.AMOUNT_PATTERN.matcher(amount).find();
-//    }
 
     public ResponseEntity<?> withDraw(WithdrawInput withdrawInput) {
 //        if (account.isAmountValid(String.valueOf(withdrawInput))) {
@@ -85,10 +101,6 @@ public class AccountService {
                 return new ResponseEntity<>(INSUFFICIENT_ACCOUNT_BALANCE, HttpStatus.OK);
             }
         }
-//        }else{
-//            return new ResponseEntity<>(AMOUNT_PATTERN_STRING, HttpStatus.BAD_REQUEST);
-//        }
-
     }
 
     public ResponseEntity<?> deposit(DepositInput depositInput){
@@ -101,5 +113,23 @@ public class AccountService {
         }
     }
 
+    public Page<Account> findAccountWithPagination(int offset , int pageSize){
+       Page<Account> accounts= accountDao.findAll(PageRequest.of(offset,pageSize));
+       return accounts;
+    }
 
 }
+
+
+
+
+
+
+
+
+
+//This is use for custom method with AccountDao query
+//        return accountDao.findByAccName(keyword);
+//Waste of code
+//  Query query= entityManager.createQuery("SELECT keyword from Account WHERE keyword=?1 ");
+// return query.getResultList();

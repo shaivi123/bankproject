@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepositInput {
+
     private long id;
     private long amount;
 }

@@ -20,12 +20,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @NotEmpty
-    @Size(min=2,max=30)
+    //@Notnull
+    //@Size(min=2,max=30)
     private String firstName;
-    @Size(min=2,max=30)
+    //@Size(min=2,max=30)
     private String lastName;
-    @Size(min=1,max=2)
+    //@Size(min=1,max=2)
     private int age;
     private String mail;
     private long mobile;

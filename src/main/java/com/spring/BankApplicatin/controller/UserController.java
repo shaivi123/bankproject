@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/saveUser")
-    public User createUser(@RequestBody userRequest dto) {
+    public User createUser( @RequestBody userRequest dto) {
         return userService.createUser(dto.getFirstName(),dto.getLastName(),dto.getAge(),dto.getMail(),dto.getMobile());
     }
     @GetMapping("/getUser")

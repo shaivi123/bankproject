@@ -6,11 +6,13 @@ import com.spring.BankApplicatin.dto.accountRequest;
 import com.spring.BankApplicatin.entity.Account;
 import com.spring.BankApplicatin.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class AccountController {
@@ -19,21 +21,21 @@ public class AccountController {
     private AccountService accountService;
 
     //for saving account details in userId
-    @PostMapping("/saveAccount/{userId}")
-    public Account createAccount(@RequestBody accountRequest dto, @PathVariable("userId") int userId) throws Exception {
-        return accountService.createAccount(dto.getAccName(), dto.getBalance(),dto.getUserID());
+    @PostMapping("/saveAccount")
+    public Account createAccount(@RequestBody accountRequest dto) throws Exception {
+        return accountService.createAccount(dto.getAccName(), dto.getBalance());
     }
 
     //for getting account list
-    @GetMapping("/getAccount")
-    public List<Account> getAccounts() {
-        return accountService.getAccounts();
+    @GetMapping("/getAccounts")
+    public List<Account> getAccounts(@RequestParam("accName") String accName) {
+        return accountService.getAccounts(accName);
     }
 
     //for checking balance
-    @GetMapping("/getAccount/{accountId}")
-    public Account checkBalanceById(@PathVariable Long accountId) {
-        return accountService.checkBalanceById(accountId);
+    @GetMapping("/checkAccountById/{id}")
+    public Optional<Account> checkAccountById(@PathVariable long id) {
+        return accountService.checkAccountById(id);
     }
 
     // for withdraw amount
@@ -47,18 +49,11 @@ public class AccountController {
     public ResponseEntity<?> deposit( @Valid @RequestBody DepositInput depositInput) {
           return accountService.deposit(depositInput);
     }
-
-
-
-
-
-
-
-
-
-
-
-
+     @GetMapping("/pagination/{offset}/{pageSize}")
+    public Page<Account> getPagination(@PathVariable int offset, @PathVariable int pageSize){
+      Page<Account> findPagination=accountService.findAccountWithPagination(offset -1,pageSize);
+      return findPagination;
+    }
 
 
 //    @PostMapping(value = "/transactions")
