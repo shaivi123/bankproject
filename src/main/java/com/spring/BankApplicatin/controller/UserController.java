@@ -20,7 +20,7 @@ public class UserController {
 
     @PostMapping("/saveUser")
     public User createUser( @RequestBody userRequest dto) {
-        return userService.createUser(dto.getFirstName(),dto.getLastName(),dto.getAge(),dto.getMail(),dto.getMobile());
+        return userService.createUser(dto.getFirstName(),dto.getLastName(),dto.getAge(),dto.getMail(),dto.getMobile(),dto.getPassword());
     }
     @GetMapping("/getUser")
     public List<User> getUsers(){

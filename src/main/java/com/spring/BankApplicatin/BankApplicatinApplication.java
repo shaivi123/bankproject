@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -15,24 +15,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SpringBootApplication
-public class BankApplicatinApplication implements CommandLineRunner {
-   @Autowired
-   private PasswordEncoder passwordEncoder;
+public class BankApplicatinApplication {
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(BankApplicatinApplication.class, args);
 		//System.out.println("enter something 123");
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-      System.out.println(this.passwordEncoder.encode("admin"));
+
+
+	@Bean
+	BCryptPasswordEncoder passwordEncoder(){
+		return new BCryptPasswordEncoder();
 	}
-
-
-//	@Bean
-//	PasswordEncoder passwordEncoder(){
-//		return new BCryptPasswordEncoder();
-//	}
 
 }

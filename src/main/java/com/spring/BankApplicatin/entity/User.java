@@ -1,22 +1,16 @@
 package com.spring.BankApplicatin.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -27,21 +21,33 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     //@Notnull
     //@Size(min=2,max=30)
+    @Column(name = "first_name")
     private String firstName;
     //@Size(min=2,max=30)
+    @Column(name = "last_name")
     private String lastName;
     //@Size(min=1,max=2)
+    @Column(name = "age")
     private int age;
+    @Column(name = "mail")
     private String mail;
+    @Column(name = "mobile")
     private long mobile;
+    @Column(name = "password")
     private String password;
+//    @OneToMany(mappedBy = "users")
+//    //@JoinColumn(name = "id")
+//    private List<Account> accounts;
 
-//    public User(String admin, String s, List<GrantedAuthority> adminRoles) {
-//    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Account> accounts = new ArrayList<>();
+
+
 
     @Override
     public String toString() {
@@ -53,35 +59,37 @@ public class User implements UserDetails {
                 ", mail='" + mail + '\'' +
                 ", mobile=" + mobile +
                 ", password='" + password + '\'' +
+                ", accounts=" + accounts +
                 '}';
     }
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         return null;
     }
-
+    @JsonIgnore
     @Override
     public String getUsername() {
         return this.mail;
     }
-
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return false;

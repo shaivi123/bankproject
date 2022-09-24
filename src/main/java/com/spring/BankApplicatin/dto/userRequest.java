@@ -14,5 +14,6 @@ public class userRequest {
     private int age;
     private String mail;
     private long mobile;
+    private String password;
 
 }

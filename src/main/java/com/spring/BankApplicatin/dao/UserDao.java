@@ -11,12 +11,8 @@ import java.util.Optional;
 
 @EnableJpaRepositories
 public interface UserDao extends JpaRepository<User,Long> {
-    Optional<User> findByMail(String userName);
 
+    Optional<User> findByMail(String mail);
 
-//    @Query("")
-//    public User getUserByUserName(){
-//
-//    }
 
 }

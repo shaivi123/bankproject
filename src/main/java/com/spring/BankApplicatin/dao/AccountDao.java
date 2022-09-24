@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-
+//JpaSpecificationExecutor<Account> added becoz  of find by accountName
 @Repository
 public interface AccountDao extends JpaRepository<Account,Long>, JpaSpecificationExecutor<Account> {
    // List<Account> findByAccountName(String lastname);

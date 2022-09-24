@@ -20,22 +20,16 @@ public class CustomUserDetailService implements UserDetailsService {
     private UserDao userDao;
     @Autowired(required = false)
     private JwtAuthRequest jwtAuthRequest;
-//    @Autowired
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public CustomUserDetailService(UserDao userDao) {
         this.userDao = userDao;
     }
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-//        com.spring.BankApplicatin.entity.User user = userDao.findByMail(userName).orElseThrow(() -> new BadCredentialsException("bad credential"));
-//        return new org.springframework.security.core.userdetails.User(user.getMail(),user.getPassword(),new ArrayList<>());
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+        com.spring.BankApplicatin.entity.User user = userDao.findByMail(mail).orElseThrow(() -> new BadCredentialsException("Username is not valid!"));
+        return new org.springframework.security.core.userdetails.User(user.getMail(),user.getPassword(),new ArrayList<>());
 
-        if(userName.equals("shaivi")){
-
-            return  new User("shaivi","parmar@",new ArrayList<>());
-
-        }else{
-            throw new UsernameNotFoundException("User name not found !! ");
-        }
     }
 }
