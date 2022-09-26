@@ -22,6 +22,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private long id;
     //@Notnull
     //@Size(min=2,max=30)
@@ -42,12 +43,19 @@ public class User implements UserDetails {
 //    @OneToMany(mappedBy = "users")
 //    //@JoinColumn(name = "id")
 //    private List<Account> accounts;
+//    public List<Account> getAccounts() {
+//    return accounts;
+//    }
+//    public void setAccounts(List<Account> accounts) {
+//        this.accounts = accounts;
+//    }
 
     @JsonIgnore
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany
     private List<Account> accounts = new ArrayList<>();
-
-
+    @JsonIgnore
+    @ManyToMany
+    private List<FamilyAcc> familyAccs=new ArrayList<>();
 
     @Override
     public String toString() {
@@ -59,7 +67,7 @@ public class User implements UserDetails {
                 ", mail='" + mail + '\'' +
                 ", mobile=" + mobile +
                 ", password='" + password + '\'' +
-                ", accounts=" + accounts +
+                ", familyAccs=" + familyAccs +
                 '}';
     }
 

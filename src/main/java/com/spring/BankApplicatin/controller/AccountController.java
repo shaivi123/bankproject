@@ -20,9 +20,9 @@ public class AccountController {
     private AccountService accountService;
 
     //for saving account details in userId
-    @PostMapping("/saveAccount")
-    public Account createAccount(@RequestBody accountRequest dto) throws Exception {
-        return accountService.createAccount(dto.getAccName(), dto.getBalance());
+    @PostMapping("/saveAccount/{user_id}")
+    public Account createAccount(@RequestBody accountRequest dto,@PathVariable ("user_id") long userId) throws Exception {
+        return accountService.createAccount(dto.getAccName(), dto.getBalance(),userId);
     }
 
     //for getting account list

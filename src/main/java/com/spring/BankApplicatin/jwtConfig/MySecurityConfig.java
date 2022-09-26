@@ -6,6 +6,7 @@ import com.spring.BankApplicatin.security.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.BeanIds;
@@ -39,6 +40,12 @@ public class MySecurityConfig  {
     private UserDetailsService userDetailsService;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        //this code is used to roles only
+        http
+                .authorizeRequests().antMatchers(HttpMethod.POST).hasAnyRole("ADMIN","MANAGER")
+                        .antMatchers(HttpMethod.PUT).hasAnyRole("ADMIN","MANAGER")
+                        .antMatchers(HttpMethod.DELETE).hasAnyRole("MANAGER")
+                        .antMatchers(HttpMethod.GET).hasAnyRole("ADMIN","MANAGER","USER");
         http
                 .csrf()
                 .disable()
@@ -67,6 +74,8 @@ public class MySecurityConfig  {
             "/h2-console/**",
             "/login",
             "/saveUser",
+            "/createFamilyAcc/{id}",
+            "/saveAccount/{user_id}",
     };
 
     @Bean

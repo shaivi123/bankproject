@@ -6,6 +6,7 @@ import com.spring.BankApplicatin.dto.DepositInput;
 import com.spring.BankApplicatin.dto.WithdrawInput;
 import com.spring.BankApplicatin.dto.accountRequest;
 import com.spring.BankApplicatin.entity.Account;
+import com.spring.BankApplicatin.entity.User;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
@@ -37,15 +38,17 @@ public class AccountService {
     private final UserService userService;
     private final EntityManager entityManager;
 
-    public Account createAccount(String accName, long balance) throws Exception {
+    public Account createAccount(String accName, long balance,long userId) throws Exception {
+        User user = userService.findById(userId);
         Account account = new Account();
         account.setAccName(accName);
         account.setBalance(balance);
-
+        account.setUsers((List<User>) user);
+//        Account accounts = accountDao.save(account);
         return accountDao.save(account);
     }
 
-  //  get accounts by name using of custom query
+  //  get accounts by name using of  custom query
     public List<Account> getAccounts(String accName) {
         List<Account> account= accountDao.findAll(new Specification<Account>(){
            @Override
@@ -118,6 +121,9 @@ public class AccountService {
        return accounts;
     }
 
+    public Account findById(long id) {
+        return null;
+    }
 }
 
 
