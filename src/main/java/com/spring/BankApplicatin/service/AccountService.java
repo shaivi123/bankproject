@@ -2,10 +2,12 @@ package com.spring.BankApplicatin.service;
 
 import com.spring.BankApplicatin.constants.ACTION;
 import com.spring.BankApplicatin.dao.AccountDao;
+import com.spring.BankApplicatin.dao.TransactionDao;
 import com.spring.BankApplicatin.dto.DepositInput;
 import com.spring.BankApplicatin.dto.WithdrawInput;
 import com.spring.BankApplicatin.dto.accountRequest;
 import com.spring.BankApplicatin.entity.Account;
+import com.spring.BankApplicatin.entity.Transaction;
 import com.spring.BankApplicatin.entity.User;
 import lombok.RequiredArgsConstructor;
 
@@ -37,18 +39,28 @@ public class AccountService {
     private final AccountDao accountDao;
     private final UserService userService;
     private final EntityManager entityManager;
+    private final TransactionDao transactionDao;
 
     public Account createAccount(String accName, long balance,long userId) throws Exception {
         User user = userService.findById(userId);
         Account account = new Account();
         account.setAccName(accName);
         account.setBalance(balance);
-        account.setUsers((List<User>) user);
-//        Account accounts = accountDao.save(account);
-        return accountDao.save(account);
+        account.setUsers(user);
+        Account accounts = accountDao.save(account);
+//        Transaction transaction=new Transaction();
+//        transaction.setTransactionName(accName);
+//        transaction.setBalance(balance);
+        Transaction transaction = new Transaction();
+        transaction.setBalance(balance);
+        transaction.setTransactionName("Deposited");
+        transaction.setAccount(account);
+        transactionDao.save(transaction);
+        return accounts;
     }
 
   //  get accounts by name using of  custom query
+    //here we get the data from accName
     public List<Account> getAccounts(String accName) {
         List<Account> account= accountDao.findAll(new Specification<Account>(){
            @Override
@@ -63,11 +75,6 @@ public class AccountService {
         return account;
     }
 
-//    public List<Account> getAccounts(String accName) {
-//         Account account= (Account) accountDao.findAll();
-//
-//        }
-//    }
 
     public Optional<Account> checkAccountById(long id) {
         return  accountDao.findById(id);
@@ -99,6 +106,11 @@ public class AccountService {
         } else {
             if (account.isAmountAvailable(withdrawInput.getAmount(), account.getBalance())) {
                 updateAccountBalance(account, withdrawInput.getAmount(), ACTION.WITHDRAW);
+                Transaction transaction = new Transaction();
+                transaction.setBalance(account.getBalance());
+                transaction.setTransactionName("Withdraw");
+                transaction.setAccount(account);
+                transactionDao.save(transaction);
                 return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(INSUFFICIENT_ACCOUNT_BALANCE, HttpStatus.OK);
@@ -112,6 +124,11 @@ public class AccountService {
             return new ResponseEntity<>(NO_ACCOUNT_FOUND, HttpStatus.OK);
         } else {
             updateAccountBalance(account, depositInput.getAmount(), ACTION.DEPOSIT);
+            Transaction transaction = new Transaction();
+            transaction.setBalance(account.getBalance());
+            transaction.setTransactionName("Deposited");
+            transaction.setAccount(account);
+            transactionDao.save(transaction);
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
     }
@@ -122,7 +139,14 @@ public class AccountService {
     }
 
     public Account findById(long id) {
-        return null;
+        Optional<Account> byId = accountDao.findById(id);
+        if(byId.isPresent())
+        {
+            return byId.get();
+        }else{
+            throw new RuntimeException("User not found!");
+        }
+
     }
 }
 
@@ -131,11 +155,3 @@ public class AccountService {
 
 
 
-
-
-
-//This is use for custom method with AccountDao query
-//        return accountDao.findByAccName(keyword);
-//Waste of code
-//  Query query= entityManager.createQuery("SELECT keyword from Account WHERE keyword=?1 ");
-// return query.getResultList();

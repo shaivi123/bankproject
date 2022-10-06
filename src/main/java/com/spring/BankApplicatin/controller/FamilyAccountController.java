@@ -1,14 +1,12 @@
 package com.spring.BankApplicatin.controller;
 
 import com.spring.BankApplicatin.dto.familyAccountRequest;
-import com.spring.BankApplicatin.entity.Account;
 import com.spring.BankApplicatin.entity.FamilyAcc;
 import com.spring.BankApplicatin.service.FamilyAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 public class FamilyAccountController {
@@ -23,14 +21,17 @@ public class FamilyAccountController {
         }
     }
 
-    @PostMapping("/addFamilyAcc/{user_id}/{id}")
-    public FamilyAcc addFamilyAccount(@RequestBody familyAccountRequest dto, @PathVariable("user_id") long userId){
+    @PostMapping("/addFamilyAcc/{userId}/{id}")
+    public FamilyAcc addFamilyAccount(@PathVariable long id, @PathVariable long userId){
 
         try {
-            return familyAccountService.addFamilyAccount(dto.getAccName(),dto.getBalance(),userId);
+            return familyAccountService.addFamilyAccount(id,userId);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
+    @GetMapping("/findFamilyAccById/{id}")
+    public Optional<FamilyAcc> findFamilyAccById(@PathVariable long id){
+       return familyAccountService.findFamilyAccById(id);
+    }
 }

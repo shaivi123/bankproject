@@ -8,9 +8,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Getter
@@ -40,19 +38,20 @@ public class User implements UserDetails {
     private long mobile;
     @Column(name = "password")
     private String password;
-//    @OneToMany(mappedBy = "users")
-//    //@JoinColumn(name = "id")
-//    private List<Account> accounts;
-//    public List<Account> getAccounts() {
-//    return accounts;
-//    }
-//    public void setAccounts(List<Account> accounts) {
-//        this.accounts = accounts;
-//    }
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name="USER_ROLE",
+                   joinColumns = {@
+                           JoinColumn(name = "user_id")
+                   },
+                  inverseJoinColumns = {@JoinColumn(name = "role_id")
+                  })
+    private Set<Role> roles=new HashSet<>();
+
 
     @JsonIgnore
     @OneToMany
-    private List<Account> accounts = new ArrayList<>();
+    private List<Account> accounts ;
     @JsonIgnore
     @ManyToMany
     private List<FamilyAcc> familyAccs=new ArrayList<>();
@@ -103,42 +102,4 @@ public class User implements UserDetails {
         return false;
     }
 
-
-//
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//         Set<Authority> set=new HashSet<>();
-//
-//        return null;
-//    }
-//
-//    @Override
-//    public String getPassword() {
-//        return null;
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return null;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return false;
-//    }
 }

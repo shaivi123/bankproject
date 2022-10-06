@@ -26,6 +26,8 @@ public class AccountController {
     }
 
     //for getting account list
+    //here accName use for find the account of account name
+    //and pass the request of localhost:9091/getAccounts?accName=current
     @GetMapping("/getAccounts")
     public List<Account> getAccounts(@RequestParam("accName") String accName) {
         return accountService.getAccounts(accName);
@@ -54,15 +56,4 @@ public class AccountController {
       return findPagination;
     }
 
-
-//    @PostMapping(value = "/transactions")
-//    public ResponseEntity<?> makeTransfer(@RequestBody TransactionInput transactionInput) {
-//       if (InputValidator.isSearchTransactionValid(transactionInput)) {
-////            new Thread(() -> transactionService.makeTransfer(transactionInput));
-//            boolean isComplete = accountService.makeTransfer(transactionInput);
-//            return new ResponseEntity<>(isComplete, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(INVALID_TRANSACTION, HttpStatus.BAD_REQUEST);
-//        }
-//    }
 }

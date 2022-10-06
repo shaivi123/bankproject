@@ -20,9 +20,6 @@ public class GenerateTokenController {
     private UserDetailsService userDetailsService;
     @Autowired
     private AuthenticationManager authenticationManager;
-
-
-
     @PostMapping("/login")
     public String createToken(@RequestBody JwtAuthRequest dto )throws Exception{
          try {
@@ -35,9 +32,6 @@ public class GenerateTokenController {
          }
        return jwtTokenHelper.generateToken(dto.getUsername());
     }
-
-
-
     @GetMapping("/welcome")
     public String welcome(){
         String text="this is private page";

@@ -40,12 +40,12 @@ public class MySecurityConfig  {
     private UserDetailsService userDetailsService;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        //this code is used to roles only
-        http
-                .authorizeRequests().antMatchers(HttpMethod.POST).hasAnyRole("ADMIN","MANAGER")
-                        .antMatchers(HttpMethod.PUT).hasAnyRole("ADMIN","MANAGER")
-                        .antMatchers(HttpMethod.DELETE).hasAnyRole("MANAGER")
-                        .antMatchers(HttpMethod.GET).hasAnyRole("ADMIN","MANAGER","USER");
+      //  this code is used to roles only
+//        http
+//                .authorizeRequests().antMatchers(HttpMethod.POST).hasAnyRole("ADMIN","MANAGER")
+//                        .antMatchers(HttpMethod.PUT).hasAnyRole("ADMIN","MANAGER")
+//                        .antMatchers(HttpMethod.DELETE).hasAnyRole("MANAGER")
+//                        .antMatchers(HttpMethod.GET).hasAnyRole("ADMIN","MANAGER","USER");
         http
                 .csrf()
                 .disable()
@@ -61,7 +61,6 @@ public class MySecurityConfig  {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-       // DefaultSecurityFilterChain defaultSecurityFilterChain=http.build();
         return http.build();
     }
     //New security config code
@@ -74,8 +73,18 @@ public class MySecurityConfig  {
             "/h2-console/**",
             "/login",
             "/saveUser",
-            "/createFamilyAcc/{id}",
-            "/saveAccount/{user_id}",
+//            "/createFamilyAcc/{id}",
+//            "/saveAccount/{user_id}",
+//            "/addFamilyAcc/{user_id}/{id}",
+//            "/findFamilyAccById/{id}",
+//            "/createNewRole",
+//            "/initRolesAndUser",
+//            "/getUser",
+//            "/getAccounts",
+//            "/saveTransaction/{id}",
+//            "/findTransactionById/{id}",
+//            "/withdraw",
+//            "/checkAccountById/{id}",
     };
 
     @Bean
@@ -90,3 +99,6 @@ public class MySecurityConfig  {
         return provider;
     }
 }
+
+
+

@@ -14,6 +14,4 @@ public class JwtAuthRequest {
     private String username;
     private String password;
 
-//    public JwtAuthRequest(String username, String password, ArrayList<Object> objects) {
-//    }
 }

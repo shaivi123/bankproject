@@ -27,36 +27,35 @@ public class Account {
     private String accName;
     @Column(name = "balance")
     private long balance;
-//    @ManyToOne
-//    @JoinColumn(name="users_id", nullable=false)
-//    private User users;
 
 
-    public List<User> getUsers() {
+
+    public User getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(User users) {
         this.users = users;
     }
-    @ManyToMany
-    @JoinColumn(name = "user_id", nullable=false)
-    private List<User> users;
+      @ManyToOne
+      @JoinColumn(name = "user_id")
+      private User users;
 
-//    public void setTransaction(List<Transaction> transaction) {
-//        this.transaction = transaction;
-//    }
-//
-//    public Account(List<Transaction> transaction) {
-//        this.transaction = transaction;
-//    }
-//
-//    public List<Transaction> getTransaction() {
-//        return transaction;
-//    }
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account", fetch = FetchType.LAZY)
-//    private List<Transaction> transaction;
+    public void setTransaction(List<Transaction> transaction) {
+        this.transaction = transaction;
+    }
+
+    public Account(List<Transaction> transaction) {
+        this.transaction = transaction;
+    }
+
+    public List<Transaction> getTransaction() {
+        return transaction;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account", fetch = FetchType.LAZY)
+    private List<Transaction> transaction;
 
 
 
@@ -67,6 +66,4 @@ public class Account {
      public long withDraw (long amount){
         return balance;
      }
-
-
 }
