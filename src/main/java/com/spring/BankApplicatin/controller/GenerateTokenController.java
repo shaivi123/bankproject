@@ -25,8 +25,6 @@ public class GenerateTokenController {
          try {
              authenticationManager.authenticate(
                      new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword()));
-                     //dto.setPassword(this.bCryptPasswordEncoder.encode(dto.getPassword()));
-
          }catch(Exception e){
              throw new Exception("invalid username/password");
          }
