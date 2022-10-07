@@ -5,7 +5,6 @@ import com.spring.BankApplicatin.dao.AccountDao;
 import com.spring.BankApplicatin.dao.TransactionDao;
 import com.spring.BankApplicatin.dto.DepositInput;
 import com.spring.BankApplicatin.dto.WithdrawInput;
-import com.spring.BankApplicatin.dto.accountRequest;
 import com.spring.BankApplicatin.entity.Account;
 import com.spring.BankApplicatin.entity.Transaction;
 import com.spring.BankApplicatin.entity.User;
@@ -17,10 +16,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -48,9 +45,6 @@ public class AccountService {
         account.setBalance(balance);
         account.setUsers(user);
         Account accounts = accountDao.save(account);
-//        Transaction transaction=new Transaction();
-//        transaction.setTransactionName(accName);
-//        transaction.setBalance(balance);
         Transaction transaction = new Transaction();
         transaction.setBalance(balance);
         transaction.setTransactionName("Deposited");
@@ -99,7 +93,7 @@ public class AccountService {
 
 
     public ResponseEntity<?> withDraw(WithdrawInput withdrawInput) {
-//        if (account.isAmountValid(String.valueOf(withdrawInput))) {
+
         Account account = getAccount(withdrawInput.getId());
         if (account == null) {
              return new ResponseEntity<>(NO_ACCOUNT_FOUND, HttpStatus.OK);

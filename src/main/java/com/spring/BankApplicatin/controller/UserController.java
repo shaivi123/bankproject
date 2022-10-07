@@ -1,14 +1,12 @@
 package com.spring.BankApplicatin.controller;
 
-import com.spring.BankApplicatin.dao.RoleDao;
+
 import com.spring.BankApplicatin.dto.userRequest;
-import com.spring.BankApplicatin.entity.Role;
 import com.spring.BankApplicatin.entity.User;
 import com.spring.BankApplicatin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController

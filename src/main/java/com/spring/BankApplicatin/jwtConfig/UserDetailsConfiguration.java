@@ -20,9 +20,4 @@ public class UserDetailsConfiguration {
         return new CustomUserDetailService(userDao);
     }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//
-//        return new BCryptPasswordEncoder();
-//    }
 }

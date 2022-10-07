@@ -15,7 +15,7 @@ public class TransactionService {
      @Autowired
      private AccountService accountService;
      public Transaction saveTransaction(long id, String transactionName,long balance ,long accId){
-//           Account account=new Account();
+
          Account account = accountService.findById(accId);
          Transaction transaction=new Transaction();
          transaction.setTransactionId(id);

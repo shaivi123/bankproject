@@ -74,22 +74,4 @@ public class AuthService {
 
 
 
-
-//    @Override
-//    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-//        String username = authentication.getName() + "";
-//        String password = authentication.getCredentials() + "";
-//
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-//        if (userDetails == null) {
-//            throw  new BadCredentialsException("Bad Credentials!");
-//        }
-//        if (bCryptPasswordEncoder.matches(password,userDetails.getPassword())) {
-//            return new UsernamePasswordAuthenticationToken(username, null, null);
-//        } else {
-//            throw new BadCredentialsException("Bad Credentials!");
-//        }
-//    }
-
-
 }

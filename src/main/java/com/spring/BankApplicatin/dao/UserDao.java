@@ -15,7 +15,7 @@ public interface UserDao extends JpaRepository<User,Long> {
 
     //this method is used to userName
     Optional<User> findByMail(String mail);
-   // @Query("select u from User where u.mail=: mail")
+
     @Query("SELECT a FROM User a WHERE CONCAT(a.mail) LIKE %?1%")
     public User getUserByUserName(@Param("mail") String mail);
 

@@ -8,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class UserService {
     private RoleService roleService;
 
     public User createUser(String firstName, String lastName, int age, String mail, long mobile,String password){
-//        User users = roleService.findByRoleName(roleName);
+
         User user=new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);

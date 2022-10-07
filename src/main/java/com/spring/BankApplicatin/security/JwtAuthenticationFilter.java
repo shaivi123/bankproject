@@ -40,10 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     e.printStackTrace();
                     System.out.println("Enable to get JWT token !!");
                 }
-//            }else {
-//                System.out.println("Jwt token does not begin Bearer !!");
-//            }
-                // UserDetails userDetails= customUserDetailService.loadUserByUsername(username);
+
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
                     if (this.jwtTokenHelper.validateToken(token, userDetails)) {

@@ -24,9 +24,7 @@ public class JwtTokenHelper {
 
         return getClaimFromToken(token, Claims::getSubject);
     }
-//    public String extractUsername(String token) {
-//        return extractClaim(token, Claims::getSubject);
-//    }
+
 
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);

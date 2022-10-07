@@ -22,14 +22,13 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private long id;
-    //@Notnull
-    //@Size(min=2,max=30)
+
     @Column(name = "first_name")
     private String firstName;
-    //@Size(min=2,max=30)
+
     @Column(name = "last_name")
     private String lastName;
-    //@Size(min=1,max=2)
+
     @Column(name = "age")
     private int age;
     @Column(name = "mail")
